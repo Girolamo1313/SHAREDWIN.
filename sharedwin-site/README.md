@@ -13,7 +13,7 @@ commission = cagnotte × 5 %            (arrondie à l'inférieur)
 cagnotte nette = cagnotte − commission
 gain d'un gagnant = mise × cagnotte nette ÷ somme des mises gagnantes
 ```
-- Personne n'a trouvé le bon résultat : toutes les mises sont remboursées, pas de commission.
+- Personne n'a trouvé le bon résultat : toutes les mises sont remboursées, pas de commission. 
 - Les centimes d'arrondi restent à la plateforme : on ne paie jamais plus que la cagnotte nette.
 - Tous les montants sont stockés en **centimes (entiers)**. 1 coin = 1 € simulé.
 - Exemple : 100 joueurs, 2 000 coins misés → commission 100 → nette 1 900. Les gagnants ont misé 800 au total : un gagnant à 40 coins reçoit 40 ÷ 800 × 1 900 = 95.
