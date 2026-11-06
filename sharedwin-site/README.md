@@ -5,7 +5,7 @@ Jeu de pronostics à cagnotte partagée. Chaque match propose 3 choix (**1 / X /
 Stack : Next.js 14 (App Router) · API REST (route handlers Node) · PostgreSQL (Supabase) · JWT en cookie HttpOnly · Déploiement Vercel.
 Mode MVP : wallet **simulé** (aucun vrai paiement). La couche paiement est isolée dans `lib/payments.js` pour brancher Stripe plus tard. 
 
-## Règles de calcul (lib/rules.js)
+## Règles de calcul (lib/rules.js) 
 
 ```
 cagnotte  = somme de toutes les mises
