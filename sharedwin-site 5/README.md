@@ -1,6 +1,6 @@
 # SharedWin
 
-Jeu de pronostics à cagnotte partagée. Chaque match propose 3 choix (**1 / X / 2**), 100 joueurs max, **1 pari par joueur et par match**. Tous les paris forment une cagnotte ; les gagnants se la partagent au prorata de leur mise, moins une **commission fixe de 5 %**.
+Jeu de pronostics à cagnotte partagée. Chaque match propose 3 choix (**1 / X / 2**), 100 joueurs max, **1 pari par joueur et par match**. Tous les paris forment une cagnotte ; les gagnants se la partagent au prorata de leur mise, moins une **commission fixe de 5 %**. 
 
 Stack : Next.js 14 (App Router) · API REST (route handlers Node) · PostgreSQL (Supabase) · JWT en cookie HttpOnly · Déploiement Vercel.
 Mode MVP : wallet **simulé** (aucun vrai paiement). La couche paiement est isolée dans `lib/payments.js` pour brancher Stripe plus tard.
