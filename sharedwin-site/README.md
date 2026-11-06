@@ -9,7 +9,7 @@ Mode MVP : wallet **simulé** (aucun vrai paiement). La couche paiement est isol
 
 ```
 cagnotte  = somme de toutes les mises
-commission = cagnotte × 5 %            (arrondie à l'inférieur)
+commission = cagnotte × 5 %            (arrondie à l'inférieur) 
 cagnotte nette = cagnotte − commission
 gain d'un gagnant = mise × cagnotte nette ÷ somme des mises gagnantes
 ```
