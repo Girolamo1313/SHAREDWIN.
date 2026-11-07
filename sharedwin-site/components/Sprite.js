@@ -13,6 +13,6 @@ const COIN = ["..oooo..", ".oyyyyo.", "oyywyydo", "oyywyydo", "oyyyyydo", "oyyyy
 const INV = ["..x.....x..", "...x...x...", "..xxxxxxx..", ".xx.xxx.xx.", "xxxxxxxxxxx", "x.xxxxxxx.x", "x.x.....x.x", "...xx.xx..."];
 const TROPHY = ["yyyyyyyyyy", "yywwyyyyyy", "yywyyyyyyy", "dyyyyyyyyd", ".dyyyyyyd.", "..dyyyyd..", "....yy....", "...dyyd...", "..dddddd.."];
 
-export const Coin = ({ px = 3 }) => <Sprite rows={COIN} pal={{ o: "#20221c", y: "#5b5f50", d: "#20221c", w: "#c9cdbd" }} px={px} />;
-export const Invader = ({ px = 4, color = "#5b5f50" }) => <Sprite rows={INV} pal={{ x: color }} px={px} />;
-export const Trophy = ({ px = 5 }) => <Sprite rows={TROPHY} pal={{ y: "#5b5f50", d: "#20221c", w: "#c9cdbd" }} px={px} />;
+export const Coin = ({ px = 3 }) => <Sprite rows={COIN} pal={{ o: "#1b0a3c", y: "#ffe14d", d: "#d99a00", w: "#ffffff" }} px={px} />;
+export const Invader = ({ px = 4, color = "#ff2a9d" }) => <Sprite rows={INV} pal={{ x: color }} px={px} />;
+export const Trophy = ({ px = 5 }) => <Sprite rows={TROPHY} pal={{ y: "#ffe14d", d: "#d99a00", w: "#ffffff" }} px={px} />;

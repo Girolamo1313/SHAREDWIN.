@@ -1,10 +1,10 @@
 import "./globals.css";
-import { Press_Start_2P, VT323 } from "next/font/google";
+import { Audiowide, Rajdhani } from "next/font/google";
 import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
 
-const px = Press_Start_2P({ weight: "400", subsets: ["latin"], variable: "--font-px", display: "swap" });
-const body = VT323({ weight: "400", subsets: ["latin"], variable: "--font-body", display: "swap" });
+const px = Audiowide({ weight: "400", subsets: ["latin"], variable: "--font-px", display: "swap" });
+const body = Rajdhani({ weight: ["500", "600", "700"], subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 export const metadata = {
   title: "SharedWin – Everybody bets, winners split the pot",
@@ -16,6 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${px.variable} ${body.variable}`}>
       <body>
+        <div id="crt" aria-hidden="true" />
         <Header />
         <main>{children}</main>
         <BottomNav />

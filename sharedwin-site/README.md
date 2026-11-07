@@ -3,17 +3,17 @@
 Jeu de pronostics à cagnotte partagée. Chaque match propose 3 choix (**1 / X / 2**), 100 joueurs max, **1 pari par joueur et par match**. Tous les paris forment une cagnotte ; les gagnants se la partagent au prorata de leur mise, moins une **commission fixe de 5 %**.
 
 Stack : Next.js 14 (App Router) · API REST (route handlers Node) · PostgreSQL (Supabase) · JWT en cookie HttpOnly · Déploiement Vercel.
-Mode MVP : wallet **simulé** (aucun vrai paiement). La couche paiement est isolée dans `lib/payments.js` pour brancher Stripe plus tard. 
+Mode MVP : wallet **simulé** (aucun vrai paiement). La couche paiement est isolée dans `lib/payments.js` pour brancher Stripe plus tard.
 
-## Règles de calcul (lib/rules.js) 
+## Règles de calcul (lib/rules.js)
 
 ```
 cagnotte  = somme de toutes les mises
-commission = cagnotte × 5 %            (arrondie à l'inférieur) 
+commission = cagnotte × 5 %            (arrondie à l'inférieur)
 cagnotte nette = cagnotte − commission
 gain d'un gagnant = mise × cagnotte nette ÷ somme des mises gagnantes
 ```
-- Personne n'a trouvé le bon résultat : toutes les mises sont remboursées, pas de commission. 
+- Personne n'a trouvé le bon résultat : toutes les mises sont remboursées, pas de commission.
 - Les centimes d'arrondi restent à la plateforme : on ne paie jamais plus que la cagnotte nette.
 - Tous les montants sont stockés en **centimes (entiers)**. 1 coin = 1 € simulé.
 - Exemple : 100 joueurs, 2 000 coins misés → commission 100 → nette 1 900. Les gagnants ont misé 800 au total : un gagnant à 40 coins reçoit 40 ÷ 800 × 1 900 = 95.
