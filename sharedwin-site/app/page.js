@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Invader, Trophy } from "@/components/Sprite";
 import MatchCard from "@/components/MatchCard";
+import ContactForm from "@/components/ContactForm";
 import { getUser } from "@/lib/auth";
 import { listMatches } from "@/lib/queries";
 import { DEFAULT_COMMISSION_BPS, DEFAULT_MAX_PLAYERS } from "@/lib/rules";
@@ -13,7 +14,7 @@ export default async function Home() {
     <>
       <section className="panel hero">
         <div className="hero-in">
-          <div>
+          <div className="hero-txt">
             <p className="eyebrow">The shared-pot prediction game</p>
             <h1>Shared<span>Win</span></h1>
             <p className="lead">Everybody puts coins in the pot. Pick <b>1</b>, <b>X</b> or <b>2</b>. The winners split it all.</p>
@@ -37,6 +38,12 @@ export default async function Home() {
       <br />
       <div className="grid g2">{matches.slice(0, 4).map((m) => <MatchCard key={m.id} m={m} />)}</div>
       {matches.length === 0 && <p className="muted">No open matches yet. Check back soon.</p>}
+
+      <section id="contact" className="panel contact" style={{ marginTop: 32 }}>
+        <h2 style={{ marginBottom: 8 }}>Contact us</h2>
+        <p className="muted">A question, an idea, a problem? Send us a message and we will get back to you.</p>
+        <ContactForm />
+      </section>
     </>
   );
 }

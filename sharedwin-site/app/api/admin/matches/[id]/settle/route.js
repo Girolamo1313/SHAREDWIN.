@@ -14,6 +14,7 @@ export const POST = handler(async (req, { params }) => {
     const m = (await c.query("select * from matches where id = $1 for update", [params.id])).rows[0];
     if (!m) throw new HttpError(404, "Match not found.");
     if (m.status !== "open") throw new HttpError(409, "Match already settled.");
+    if (result === "D" && m.has_draw === false) throw new HttpError(400, "This market has no X option.");
 
     const bets = (await c.query("select id, user_id, pick, stake_cents from bets where match_id = $1 for update", [m.id])).rows;
     const s = computeSettlement(bets, result, m.commission_bps);

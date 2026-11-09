@@ -2,6 +2,8 @@ import "./globals.css";
 import { Audiowide, Rajdhani } from "next/font/google";
 import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
+import Footer from "@/components/Footer";
+import ChatBox from "@/components/ChatBox";
 
 const px = Audiowide({ weight: "400", subsets: ["latin"], variable: "--font-px", display: "swap" });
 const body = Rajdhani({ weight: ["500", "600", "700"], subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -19,6 +21,8 @@ export default function RootLayout({ children }) {
         <div id="crt" aria-hidden="true" />
         <Header />
         <main>{children}</main>
+        <Footer />
+        <ChatBox />
         <BottomNav />
       </body>
     </html>

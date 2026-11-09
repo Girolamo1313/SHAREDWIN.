@@ -22,6 +22,7 @@ export const POST = handler(async (req, { params }, user) => {
     if (!m) throw new HttpError(404, "Match not found.");
     if (m.status !== "open" || new Date(m.kickoff_at) <= new Date()) throw new HttpError(409, "Betting is closed for this match.");
 
+    if (pick === "D" && m.has_draw === false) throw new HttpError(400, "This market has no X option.");
     const { n } = (await c.query("select count(*)::int as n from bets where match_id = $1", [m.id])).rows[0];
     if (n >= m.max_players) throw new HttpError(409, `Match is full (${m.max_players} players).`);
 

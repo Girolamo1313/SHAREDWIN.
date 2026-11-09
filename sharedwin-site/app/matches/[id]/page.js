@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import BetForm from "@/components/BetForm";
 import { getUser } from "@/lib/auth";
 import { getMatch, getUserBet } from "@/lib/queries";
-import { fmtCoins, pickLabel, pickSymbol } from "@/lib/rules";
+import { fmtCoins, pickLabel, pickSymbol, pickList } from "@/lib/rules";
 
 export const dynamic = "force-dynamic";
 
@@ -12,8 +12,8 @@ function ReadonlyPicks({ m, mine }) {
   const counts = { H: m.h_n, D: m.d_n, A: m.a_n };
   const pool = totals.H + totals.D + totals.A;
   return (
-    <div className="picks" style={{ marginBottom: 26 }}>
-      {["H", "D", "A"].map((p) => {
+    <div className="picks" style={{ marginBottom: 26, ...(m.has_draw === false ? { gridTemplateColumns: "repeat(2,1fr)" } : {}) }}>
+      {pickList(m).map((p) => {
         const share = pool ? Math.round((totals[p] / pool) * 100) : 0;
         const on = m.result === p || (!m.result && mine?.pick === p);
         return (
@@ -46,6 +46,7 @@ export default async function MatchPage({ params }) {
       <Link className="tag m" href="/matches">← Back</Link><br /><br />
       <section className="panel">
         <div className="row between"><span className="tag">{m.sport}</span><span className="small muted">{m.league} · {when}</span></div>
+        {m.title && <h3 style={{ margin: "16px 0 0", lineHeight: 1.4 }}>{m.title}</h3>}
         <div className="vs" style={{ margin: "22px 0" }}><div className="team">{m.home}</div><div className="vsb">VS</div><div className="team">{m.away}</div></div>
         <div className="calc">
           <div><span>Pot</span><b>{fmtCoins(m.pool_live)} coins</b></div>
@@ -99,7 +100,7 @@ export default async function MatchPage({ params }) {
         </>
       ) : (
         <BetForm
-          match={{ id: m.id, home: m.home, away: m.away, commission_bps: m.commission_bps }}
+          match={{ id: m.id, home: m.home, away: m.away, has_draw: m.has_draw, draw_label: m.draw_label, commission_bps: m.commission_bps }}
           totals={{ H: m.h_stake, D: m.d_stake, A: m.a_stake }}
           counts={{ H: m.h_n, D: m.d_n, A: m.a_n }}
           balanceCents={user.balance_cents}
