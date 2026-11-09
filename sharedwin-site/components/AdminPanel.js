@@ -5,10 +5,12 @@ import { post } from "@/lib/client";
 
 const EMPTY = { sport: "Football", league: "", title: "", home: "", away: "", hasDraw: true, drawLabel: "", kickoff: "", maxPlayers: 100 };
 
-export default function AdminPanel({ open, messages = [] }) {
+export default function AdminPanel({ open, messages = [], codes = [] }) {
   const router = useRouter();
   const [f, setF] = useState(EMPTY);
   const [msg, setMsg] = useState(null);
+  const [cg, setCg] = useState({ count: 1, amount: 100 });
+  const [fresh, setFresh] = useState([]);
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
 
   async function create(e) {
@@ -23,6 +25,15 @@ export default function AdminPanel({ open, messages = [] }) {
     if (!r.ok) return setMsg({ err: true, text: r.data.error || "Failed." });
     setMsg({ err: false, text: "Market created." });
     setF(EMPTY);
+    router.refresh();
+  }
+  async function makeCodes(e) {
+    e.preventDefault();
+    setMsg(null);
+    const r = await post("/api/admin/codes", { count: Number(cg.count), amountCoins: Number(cg.amount) });
+    if (!r.ok) return setMsg({ err: true, text: r.data.error || "Failed." });
+    setFresh(r.data.codes);
+    setMsg({ err: false, text: `${r.data.codes.length} code(s) created, ${r.data.amountCoins} pognons each.` });
     router.refresh();
   }
   async function settle(id, result) {
@@ -52,6 +63,31 @@ export default function AdminPanel({ open, messages = [] }) {
         <button className="btn pink block mt">Create market</button>
       </form>
       {msg && <div className={`notice${msg.err ? " err" : ""}`} role="status">{msg.text}</div>}
+      <form className="panel" onSubmit={makeCodes}>
+        <h3>Pognon codes</h3>
+        <p className="small muted mt">One code = one deposit, usable once. Send each player their own code.</p>
+        <div className="grid g2">
+          <div><label>How many codes</label><input type="number" min="1" max="50" value={cg.count} onChange={(e) => setCg({ ...cg, count: e.target.value })} /></div>
+          <div><label>Pognons per code</label><input type="number" min="1" max="1000" value={cg.amount} onChange={(e) => setCg({ ...cg, amount: e.target.value })} /></div>
+        </div>
+        <button className="btn pink block mt">Generate codes</button>
+        {fresh.length > 0 && (
+          <div className="calc" style={{ marginTop: 14 }}>
+            {fresh.map((c) => <div key={c}><b style={{ fontFamily: "var(--px)", letterSpacing: ".08em" }}>{c}</b></div>)}
+          </div>
+        )}
+      </form>
+      {codes.length > 0 && (
+        <>
+          <h3 style={{ margin: "6px 0 10px" }}>Latest codes</h3>
+          {codes.map((c) => (
+            <div className="lrow" key={c.code}>
+              <div className="nm"><span style={{ fontFamily: "var(--px)", letterSpacing: ".06em" }}>{c.code}</span><br /><span className="small muted">{c.amount_cents / 100} pognons · {c.used_by_name ? `used by ${c.used_by_name}` : "not used yet"}</span></div>
+              <div className={`am ${c.used_by_name ? "neg" : "pos"}`}>{c.used_by_name ? "USED" : "FREE"}</div>
+            </div>
+          ))}
+        </>
+      )}
       <h2>Open markets</h2>
       {open.length === 0 && <p className="muted">No open markets.</p>}
       {open.map((m) => (
