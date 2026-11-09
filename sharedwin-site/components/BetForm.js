@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { post } from "@/lib/client";
-import { estimatePayout, fmtCoins, pickSymbol, STAKE_MIN_CENTS, STAKE_MAX_CENTS } from "@/lib/rules";
+import { estimatePayout, fmtCoins, pickSymbol, pickLabel, pickList, STAKE_MIN_CENTS, STAKE_MAX_CENTS } from "@/lib/rules";
 
 export default function BetForm({ match, totals, counts, balanceCents }) {
   const router = useRouter();
@@ -24,11 +24,11 @@ export default function BetForm({ match, totals, counts, balanceCents }) {
     router.refresh();
   }
 
-  const opts = [["H", match.home], ["D", "Draw"], ["A", match.away]];
+  const opts = pickList(match).map((p) => [p, pickLabel(match, p)]);
   return (
     <>
       <h2>Choose your outcome</h2>
-      <div className="picks" style={{ marginBottom: 26 }}>
+      <div className="picks" style={{ marginBottom: 26, ...(opts.length === 2 ? { gridTemplateColumns: "repeat(2,1fr)" } : {}) }}>
         {opts.map(([p, label]) => {
           const share = pool ? Math.round((totals[p] / pool) * 100) : 0;
           return (

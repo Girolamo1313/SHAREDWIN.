@@ -27,13 +27,17 @@ function initAudio(){
   var comp=AC.createDynamicsCompressor();
   master=AC.createGain();master.gain.value=0;
   master.connect(comp);comp.connect(AC.destination);
-  /* rhythm guitar: highpass > drive > distortion > cabinet filter */
+  /* rhythm guitar: highpass > preamp > 2-stage distortion > cabinet (speaker) filters */
   gtrBus=AC.createGain();gtrBus.gain.value=1;
-  var hp=AC.createBiquadFilter();hp.type="highpass";hp.frequency.value=90;
-  var sh=AC.createWaveShaper();sh.curve=dcurve(60);sh.oversample="4x";
-  gtrLP=AC.createBiquadFilter();gtrLP.type="lowpass";gtrLP.frequency.value=2000;
-  gtrPre=AC.createGain();gtrPre.gain.value=1.2;
-  gtrBus.connect(hp);hp.connect(gtrPre);gtrPre.connect(sh);sh.connect(gtrLP);gtrLP.connect(master);
+  var hp=AC.createBiquadFilter();hp.type="highpass";hp.frequency.value=110;
+  gtrPre=AC.createGain();gtrPre.gain.value=1.6;
+  var sh1=AC.createWaveShaper();sh1.curve=dcurve(35);sh1.oversample="4x";
+  var mid=AC.createBiquadFilter();mid.type="peaking";mid.frequency.value=900;mid.Q.value=0.9;mid.gain.value=6;
+  var sh2=AC.createWaveShaper();sh2.curve=dcurve(70);sh2.oversample="4x";
+  var cab1=AC.createBiquadFilter();cab1.type="peaking";cab1.frequency.value=2800;cab1.Q.value=1.1;cab1.gain.value=4;
+  gtrLP=AC.createBiquadFilter();gtrLP.type="lowpass";gtrLP.frequency.value=3200;gtrLP.Q.value=0.8;
+  var post=AC.createGain();post.gain.value=0.7;
+  gtrBus.connect(hp);hp.connect(gtrPre);gtrPre.connect(sh1);sh1.connect(mid);mid.connect(sh2);sh2.connect(cab1);cab1.connect(gtrLP);gtrLP.connect(post);post.connect(master);
   /* bass: saturated saw (audible on small speakers) + sub sine */
   bassBus=AC.createGain();bassBus.gain.value=1.3;bassBus.connect(master);
   bassSat=AC.createWaveShaper();bassSat.curve=dcurve(30);
@@ -52,17 +56,23 @@ function initAudio(){
 }
 function chord(t,semi,dur){
   var base=82.41*Math.pow(2,semi/12);
-  [1,1.4983,2].forEach(function(r){
-    [0,7].forEach(function(det){
-      var o=AC.createOscillator();o.type="sawtooth";o.frequency.value=base*r;o.detune.value=det;
-      var g=AC.createGain();
-      g.gain.setValueAtTime(0.0001,t);
-      g.gain.linearRampToValueAtTime(0.16,t+0.006);
-      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
-      o.connect(g);g.connect(gtrBus);
-      o.start(t);o.stop(t+dur+0.05);
-    });
+  /* power chord: root, fifth, octave; one oscillator each, slightly different tuning like real strings */
+  [[1,-3],[1.4983,2],[2,-2]].forEach(function(r){
+    var o=AC.createOscillator();o.type="sawtooth";o.frequency.value=base*r[0];o.detune.value=r[1];
+    var g=AC.createGain();
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.linearRampToValueAtTime(0.28,t+0.004);
+    g.gain.exponentialRampToValueAtTime(0.16,t+Math.min(0.12,dur*0.4));
+    g.gain.setValueAtTime(0.16,t+dur*0.7);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g);g.connect(gtrBus);
+    o.start(t);o.stop(t+dur+0.05);
   });
+  /* pick attack: very short burst of noise through the same amp */
+  var n=AC.createBufferSource();n.buffer=noiseBuf;
+  var nf=AC.createBiquadFilter();nf.type="bandpass";nf.frequency.value=2400;nf.Q.value=0.8;
+  var ng=AC.createGain();ng.gain.setValueAtTime(0.18,t);ng.gain.exponentialRampToValueAtTime(0.001,t+0.025);
+  n.connect(nf);nf.connect(ng);ng.connect(gtrBus);n.start(t);n.stop(t+0.04);
 }
 function bass(t,semi,dur){
   var f=41.2*Math.pow(2,semi/12);
@@ -148,8 +158,8 @@ function toggleSound(){
     var now=AC.currentTime;
     nextT=now+0.06;gstep=0;startT=nextT;bassIn=false;
     /* the guitar gets brighter and angrier during the first minute */
-    gtrLP.frequency.cancelScheduledValues(now);gtrLP.frequency.setValueAtTime(2000,now);gtrLP.frequency.linearRampToValueAtTime(4400,now+60);
-    gtrPre.gain.cancelScheduledValues(now);gtrPre.gain.setValueAtTime(1.2,now);gtrPre.gain.linearRampToValueAtTime(2.2,now+60);
+    gtrLP.frequency.cancelScheduledValues(now);gtrLP.frequency.setValueAtTime(2600,now);gtrLP.frequency.linearRampToValueAtTime(4200,now+60);
+    gtrPre.gain.cancelScheduledValues(now);gtrPre.gain.setValueAtTime(1.4,now);gtrPre.gain.linearRampToValueAtTime(2.2,now+60);
     master.gain.cancelScheduledValues(now);
     master.gain.setTargetAtTime(0.55,now,0.03);
     riffTimer=setInterval(schedule,25);

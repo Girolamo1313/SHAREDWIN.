@@ -9,7 +9,8 @@ export const DEFAULT_MAX_PLAYERS = 100;
 export const PICKS = ["H", "D", "A"];      // Home (1), Draw (X), Away (2)
 
 export const pickSymbol = (p) => (p === "H" ? "1" : p === "A" ? "2" : "X");
-export const pickLabel = (m, p) => (p === "H" ? m.home : p === "A" ? m.away : "Draw");
+export const pickLabel = (m, p) => (p === "H" ? m.home : p === "A" ? m.away : (m.draw_label || "Draw"));
+export const pickList = (m) => (m.has_draw === false ? ["H", "A"] : ["H", "D", "A"]);
 
 export function fmtCoins(cents) {
   const n = cents / 100;
