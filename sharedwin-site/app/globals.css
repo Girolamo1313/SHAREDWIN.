@@ -348,3 +348,7 @@ label.check input{width:22px;height:22px;accent-color:#ff2a9d}
   .hero h1{font-size:clamp(28px,10.5vw,52px)}
   .hero .lead{font-size:20px}
 }
+
+/* Pognon sign: bold P with a vertical bar through it, like $ */
+.pmark{position:relative;display:inline-block;font-family:var(--px);font-weight:900;-webkit-text-stroke:.05em currentColor;padding:0 .12em;margin-right:.3em;line-height:1}
+.pmark::after{content:"";position:absolute;left:50%;top:-.16em;bottom:-.16em;width:.14em;margin-left:-.07em;background:currentColor;border-radius:1px}
