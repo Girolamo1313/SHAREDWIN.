@@ -392,3 +392,26 @@ label.check input{width:22px;height:22px;accent-color:#ff2a9d}
 .pf5{animation:pp5 4s steps(1,end) infinite}
 .pf4,.pf5{visibility:hidden}
 @media (prefers-reduced-motion:reduce){.pf1,.pf2,.pf3,.pf4,.pf5{animation:none;visibility:hidden}.pf5{visibility:visible}}
+
+/* title row: SHAREDWIN, the trophy and the footballer on one line, footballer as tall as the title */
+.hero-in{justify-content:flex-start}
+.title-row{display:flex;align-items:flex-end;flex-wrap:wrap;gap:4px 14px;font-size:clamp(30px,9.5vw,68px);line-height:1}
+.title-row h1{margin:6px 0 16px;flex:0 0 auto}
+.title-row .art{display:flex !important;align-items:flex-end;gap:12px;flex:0 0 auto;margin:0 0 14px;opacity:1}
+.title-row .trophy svg{display:block;height:.62em;width:auto}
+.player.fluid{display:block;position:relative;height:1.05em;width:auto}
+.player.fluid .pf{inset:0;width:100%;height:100%}
+.player.fluid svg{display:block;width:100%;height:100%}
+@media (max-width:520px){.title-row .art{margin-bottom:8px}}
+
+/* title row tuning: footballer slightly taller than the title, smaller trophy, one line on phones */
+.title-row .trophy svg{height:.5em}
+.player.fluid{height:1.12em}
+@media (max-width:520px){
+  .hero .title-row,.hero .title-row h1{font-size:clamp(24px,7.6vw,46px)}
+  .title-row{gap:6px 8px}
+  .title-row .art{gap:6px;margin-bottom:10px}
+}
+
+/* two players side by side, facing each other */
+.title-row .art{gap:2px}
