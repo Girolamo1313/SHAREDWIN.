@@ -42,7 +42,7 @@ export async function getUser() {
   try {
     const { payload } = await jwtVerify(token, secret());
     const r = await query(
-      "select id, username, email, balance_cents, is_admin, created_at from users where id = $1",
+      "select id, username, email, balance_cents, is_admin, created_at, avatar from users where id = $1",
       [payload.sub]
     );
     return r.rows[0] ?? null;

@@ -72,7 +72,7 @@ export async function listTransactions(userId, limit = 30) {
 
 export async function leaderboard(limit = 20) {
   const r = await query(
-    `select u.id, u.username,
+    `select u.id, u.username, u.avatar,
        coalesce(sum(case b.status when 'won' then b.payout_cents - b.stake_cents when 'lost' then -b.stake_cents else 0 end), 0)::int as net,
        count(b.id) filter (where b.status = 'won')::int as wins,
        count(b.id) filter (where b.status in ('won','lost'))::int as played
