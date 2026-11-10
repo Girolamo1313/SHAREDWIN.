@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { post } from "@/lib/client";
+import Avatar from "./Avatar";
 
 export default function ChatBox() {
   const [open, setOpen] = useState(false);
@@ -51,7 +52,7 @@ export default function ChatBox() {
             {data.messages.length === 0 && <p className="small muted">No messages yet. Say hello!</p>}
             {data.messages.map((m) => (
               <div key={m.id} className={`chat-msg${m.mine ? " mine" : ""}`}>
-                <span className="chat-who">{m.username}</span> {m.body}
+                <Avatar avatar={m.avatar} size={22} /> <span className="chat-who">{m.username}</span> {m.body}
                 {data.me?.isAdmin && <button type="button" className="chat-del" onClick={() => remove(m.id)} aria-label="Delete message">✕</button>}
               </div>
             ))}
