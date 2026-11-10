@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { DEFAULT_COMMISSION_BPS, DEFAULT_MAX_PLAYERS } from "@/lib/rules";
 
-export const metadata = { title: "Terms & Conditions – SharedWin" };
+export const metadata = { title: "Terms & Conditions – SharedWin", description: "The terms of use of SharedWin: eligibility, virtual coins, how pots and fees work, conduct and data.", alternates: { canonical: "/terms" } };
 
 const S = ({ n, t, children }) => (
   <section className="panel legal">

@@ -1,11 +1,17 @@
 import Link from "next/link";
-import { Invader, Trophy } from "@/components/Sprite";
+import { Trophy } from "@/components/Sprite";
+import Player from "@/components/Player";
 import MatchCard from "@/components/MatchCard";
 import ContactForm from "@/components/ContactForm";
 import { getUser } from "@/lib/auth";
 import { listMatches } from "@/lib/queries";
 import { DEFAULT_COMMISSION_BPS, DEFAULT_MAX_PLAYERS } from "@/lib/rules";
 
+export const metadata = {
+  title: "SharedWin – Shared-pot prediction game. Pick 1, X or 2",
+  description: "Everybody puts coins in the pot, winners split it. Pick 1, X or 2 on football, rugby, hockey and more. Virtual coins, no cash value. 18+.",
+  alternates: { canonical: "/" },
+};
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
@@ -23,7 +29,7 @@ export default async function Home() {
               <Link className="btn ghost" href="/matches">See matches</Link>
             </div>
           </div>
-          <div className="art"><div className="bob"><Invader px={8} /></div><div className="bob" style={{ animationDelay: ".3s" }}><Trophy px={7} /></div></div>
+          <div className="art"><div className="bob"><Trophy px={7} /></div><div className="field"><Player px={6} /></div></div>
         </div>
       </section>
 
@@ -38,6 +44,17 @@ export default async function Home() {
       <br />
       <div className="grid g2">{matches.slice(0, 4).map((m) => <MatchCard key={m.id} m={m} />)}</div>
       {matches.length === 0 && <p className="muted">No open matches yet. Check back soon.</p>}
+
+      <section className="panel" style={{ marginTop: 32 }}>
+        <h2 style={{ marginBottom: 8 }}>New here?</h2>
+        <p className="muted">Learn the rules in two minutes.</p>
+        <div className="chips mt">
+          <Link className="chip" href="/how-it-works">How it works</Link>
+          <Link className="chip" href="/faq">FAQ</Link>
+          <Link className="chip" href="/glossary">Glossary</Link>
+          <Link className="chip" href="/leaderboard">Leaderboard</Link>
+        </div>
+      </section>
 
       <section id="contact" className="panel contact" style={{ marginTop: 32 }}>
         <h2 style={{ marginBottom: 8 }}>Contact us</h2>

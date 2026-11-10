@@ -5,7 +5,7 @@ import { listUserBets, userStats } from "@/lib/queries";
 import { fmtCoins, pickLabel, pickSymbol, DEFAULT_COMMISSION_BPS } from "@/lib/rules";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Dashboard – SharedWin" };
+export const metadata = { title: "Dashboard – SharedWin", robots: { index: false, follow: false } };
 
 export default async function Dashboard() {
   const user = await getUser();

@@ -6,7 +6,7 @@ import { listTransactions } from "@/lib/queries";
 import { fmtCoins } from "@/lib/rules";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Wallet – SharedWin" };
+export const metadata = { title: "Wallet – SharedWin", robots: { index: false, follow: false } };
 
 export default async function Wallet() {
   const user = await getUser();

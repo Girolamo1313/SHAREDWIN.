@@ -9,14 +9,14 @@ export const GET = handler(async () => {
   const user = await getUser();
   const rows = (await query(
     `select * from (
-       select c.id, c.body, c.created_at, c.user_id, u.username
+       select c.id, c.body, c.created_at, c.user_id, u.username, u.avatar
        from chat_messages c join users u on u.id = c.user_id
        order by c.id desc limit 50
      ) t order by id asc`
   )).rows;
   return json({
     me: user ? { id: user.id, isAdmin: !!user.is_admin } : null,
-    messages: rows.map((r) => ({ id: Number(r.id), body: r.body, username: r.username, mine: !!user && r.user_id === user.id, at: r.created_at })),
+    messages: rows.map((r) => ({ id: Number(r.id), body: r.body, username: r.username, avatar: r.avatar, mine: !!user && r.user_id === user.id, at: r.created_at })),
   });
 }, { auth: false });
 

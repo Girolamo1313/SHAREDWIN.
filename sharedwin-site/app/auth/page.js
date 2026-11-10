@@ -4,7 +4,7 @@ import { Invader } from "@/components/Sprite";
 import { getUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Log in – SharedWin" };
+export const metadata = { title: "Log in – SharedWin", robots: { index: false, follow: false } };
 
 export default async function AuthPage() {
   if (await getUser()) redirect("/dashboard");

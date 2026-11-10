@@ -5,7 +5,7 @@ import { listUserBets } from "@/lib/queries";
 import { fmtCoins, pickLabel, pickSymbol } from "@/lib/rules";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "History – SharedWin" };
+export const metadata = { title: "History – SharedWin", robots: { index: false, follow: false } };
 
 export default async function History() {
   const user = await getUser();

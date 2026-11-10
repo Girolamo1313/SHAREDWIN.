@@ -1,11 +1,21 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import BetForm from "@/components/BetForm";
+import MandolinTrigger from "@/components/MandolinTrigger";
 import { getUser } from "@/lib/auth";
 import { getMatch, getUserBet } from "@/lib/queries";
 import { fmtCoins, pickLabel, pickSymbol, pickList } from "@/lib/rules";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }) {
+  const m = await getMatch(params.id);
+  if (!m) return { title: "Market not found – SharedWin", robots: { index: false, follow: false } };
+  const name = m.title ? `${m.title}: ${m.home} vs ${m.away}` : `${m.home} vs ${m.away}`;
+  const title = `${name} – Prediction pool | SharedWin`;
+  const description = `${m.league}: ${name}. Pick your outcome, put coins in the shared pot and split it with the winners. Virtual coins, no cash value.`;
+  return { title, description, alternates: { canonical: `/matches/${m.id}` }, openGraph: { title, description, url: `/matches/${m.id}`, type: "website" } };
+}
 
 function ReadonlyPicks({ m, mine }) {
   const totals = { H: m.h_stake, D: m.d_stake, A: m.a_stake };
@@ -38,11 +48,14 @@ export default async function MatchPage({ params }) {
   const mine = user ? await getUserBet(user.id, m.id) : null;
   const full = m.players >= m.max_players;
   const started = new Date(m.kickoff_at) <= new Date();
+  // Italian market (team, title or competition) that is still open: play the mandolin tune
+  const isItalian = m.status === "open" && /ital|serie a/i.test(`${m.home} ${m.away} ${m.title || ""} ${m.league || ""}`);
   const when = new Date(m.kickoff_at).toLocaleString("en-GB", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
   const feePct = m.commission_bps / 100;
 
   return (
     <>
+      {isItalian && <MandolinTrigger />}
       <Link className="tag m" href="/matches">← Back</Link><br /><br />
       <section className="panel">
         <div className="row between"><span className="tag">{m.sport}</span><span className="small muted">{m.league} · {when}</span></div>

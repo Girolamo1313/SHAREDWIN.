@@ -352,3 +352,43 @@ label.check input{width:22px;height:22px;accent-color:#ff2a9d}
 /* Pognon sign: bold P with a vertical bar through it, like $ */
 .pmark{position:relative;display:inline-block;font-family:var(--px);font-weight:900;-webkit-text-stroke:.05em currentColor;padding:0 .12em;margin-right:.3em;line-height:1}
 .pmark::after{content:"";position:absolute;left:50%;top:-.16em;bottom:-.16em;width:.14em;margin-left:-.07em;background:currentColor;border-radius:1px}
+
+/* avatars + clearer Pognon sign */
+.avatar{display:inline-block;vertical-align:middle}
+.chat-msg .avatar{margin-right:4px;vertical-align:-6px}
+.hr{display:flex;align-items:center;gap:10px}
+.pmark{font-size:1.35em;-webkit-text-stroke:.025em currentColor;margin-right:.35em;top:.04em}
+.pmark::after{top:-.12em;bottom:-.12em;width:.11em;margin-left:-.055em}
+
+/* hero title: light blue + pink, like the logo */
+.hero h1{color:#00f0ff;text-shadow:0 0 14px rgba(0,240,255,.85),3px 3px 0 #1b0a3c;background:none;-webkit-background-clip:border-box;background-clip:border-box;filter:none;-webkit-text-fill-color:#00f0ff}
+.hero h1 span{color:#ff2a9d;text-shadow:0 0 14px rgba(255,42,157,.9),3px 3px 0 #1b0a3c;background:none;-webkit-text-fill-color:#ff2a9d}
+
+/* animated footballer: runs along the field, then celebrates with both arms up */
+.field{position:relative;display:flex;align-items:flex-end;justify-content:center;min-width:170px;padding:0 6px 8px;border-bottom:4px solid #3dffa2;box-shadow:0 6px 14px -6px rgba(61,255,162,.8)}
+.player{position:relative;display:inline-block}
+.pf{position:absolute;left:0;bottom:0;visibility:hidden}
+.pf1{animation:pl1 2.8s steps(1,end) infinite}
+.pf2{animation:pl2 2.8s steps(1,end) infinite}
+.pf3{animation:pl3 2.8s steps(1,end) infinite}
+@keyframes pl1{0%,12.5%{visibility:visible}12.51%,25%{visibility:hidden}25.01%,37.5%{visibility:visible}37.51%,50%{visibility:hidden}50.01%,62.5%{visibility:visible}62.51%,100%{visibility:hidden}}
+@keyframes pl2{0%,12.5%{visibility:hidden}12.51%,25%{visibility:visible}25.01%,37.5%{visibility:hidden}37.51%,50%{visibility:visible}50.01%,100%{visibility:hidden}}
+@keyframes pl3{0%,62.5%{visibility:hidden}62.51%,100%{visibility:visible}}
+.player{animation:plJump 2.8s steps(1,end) infinite}
+@keyframes plJump{0%,62.5%{transform:translateY(0)}68%,75%{transform:translateY(-10px)}81%,100%{transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.pf1,.pf2,.player{animation:none}.pf1{visibility:visible}.pf3{display:none}}
+
+/* footballer v2: 4-frame run cycle (twice), then celebration */
+.player{animation:none}
+@keyframes pp1{0%{visibility:visible}6.24%{visibility:visible}6.25%{visibility:hidden}25%{visibility:visible}31.24%{visibility:visible}31.25%{visibility:hidden}}
+.pf1{animation:pp1 4s steps(1,end) infinite}
+@keyframes pp2{0%{visibility:hidden}6.25%{visibility:visible}12.49%{visibility:visible}12.5%{visibility:hidden}31.25%{visibility:visible}37.49%{visibility:visible}37.5%{visibility:hidden}}
+.pf2{animation:pp2 4s steps(1,end) infinite}
+@keyframes pp3{0%{visibility:hidden}12.5%{visibility:visible}18.74%{visibility:visible}18.75%{visibility:hidden}37.5%{visibility:visible}43.74%{visibility:visible}43.75%{visibility:hidden}}
+.pf3{animation:pp3 4s steps(1,end) infinite}
+@keyframes pp4{0%{visibility:hidden}18.75%{visibility:visible}24.99%{visibility:visible}25%{visibility:hidden}43.75%{visibility:visible}49.99%{visibility:visible}50%{visibility:hidden}}
+.pf4{animation:pp4 4s steps(1,end) infinite}
+@keyframes pp5{0%{visibility:hidden}50%{visibility:visible}99.99%{visibility:visible}}
+.pf5{animation:pp5 4s steps(1,end) infinite}
+.pf4,.pf5{visibility:hidden}
+@media (prefers-reduced-motion:reduce){.pf1,.pf2,.pf3,.pf4,.pf5{animation:none;visibility:hidden}.pf5{visibility:visible}}

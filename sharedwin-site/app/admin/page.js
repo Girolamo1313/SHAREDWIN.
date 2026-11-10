@@ -4,7 +4,7 @@ import { listMatches } from "@/lib/queries";
 import { query } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Admin – SharedWin" };
+export const metadata = { title: "Admin – SharedWin", robots: { index: false, follow: false } };
 
 export default async function Admin() {
   await requireAdmin();

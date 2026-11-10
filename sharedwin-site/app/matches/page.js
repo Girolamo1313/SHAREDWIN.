@@ -3,7 +3,7 @@ import MatchCard from "@/components/MatchCard";
 import { listMatches, listSports } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Matches – SharedWin" };
+export const metadata = { title: "Open markets – Pick 1, X or 2 | SharedWin", description: "Browse open prediction markets on football, rugby, hockey and more. Pick your outcome and share the pot with the winners.", alternates: { canonical: "/matches" } };
 
 export default async function Matches({ searchParams }) {
   const sport = typeof searchParams?.sport === "string" ? searchParams.sport : undefined;

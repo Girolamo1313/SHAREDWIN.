@@ -1,12 +1,13 @@
 import Link from "next/link";
 import LoginRequired from "@/components/LoginRequired";
 import LogoutButton from "@/components/LogoutButton";
-import { Invader } from "@/components/Sprite";
+import Avatar from "@/components/Avatar";
+import AvatarEditor from "@/components/AvatarEditor";
 import { getUser } from "@/lib/auth";
 import { userStats } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Profile – SharedWin" };
+export const metadata = { title: "Profile – SharedWin", robots: { index: false, follow: false } };
 
 export default async function Profile() {
   const user = await getUser();
@@ -22,8 +23,9 @@ export default async function Profile() {
     <>
       <h2>Profile</h2>
       <section className="panel">
-        <div className="row"><Invader px={8} /><div><h3 style={{ fontSize: 14 }}>{user.username}</h3><p className="muted" style={{ margin: "8px 0 0" }}>Player since {new Date(user.created_at).toLocaleDateString("en-GB")}</p></div></div>
+        <div className="row"><Avatar avatar={user.avatar} size={72} /><div><h3 style={{ fontSize: 14 }}>{user.username}</h3><p className="muted" style={{ margin: "8px 0 0" }}>Player since {new Date(user.created_at).toLocaleDateString("en-GB")}</p></div></div>
       </section>
+      <AvatarEditor initial={user.avatar} />
       <section className="panel">
         <h3>Badges</h3>
         <div className="chips mt">{badges.length ? badges.map((b) => <span key={b} className="tag">{b}</span>) : <span className="muted">Play to unlock badges.</span>}</div>
