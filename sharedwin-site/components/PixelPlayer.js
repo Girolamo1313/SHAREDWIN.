@@ -19,13 +19,13 @@ function Frame({ rows, pal, px }) {
   );
 }
 
-export default function PixelPlayer({ frames, pal, label, px = 3, fluid = false }) {
+export default function PixelPlayer({ frames, pal, label, px = 3, fluid = false, prefix = "pf" }) {
   const w = frames[0][0].length, h = frames[0].length;
   const style = fluid ? { aspectRatio: `${w} / ${h}` } : { width: w * px, height: h * px };
   return (
     <span className={`player${fluid ? " fluid" : ""}`} role="img" aria-label={label} style={style}>
       {frames.map((rows, i) => (
-        <span key={i} className={`pf pf${i + 1}`}><Frame rows={rows} pal={pal} px={px} /></span>
+        <span key={i} className={`pf ${prefix}${i + 1}`}><Frame rows={rows} pal={pal} px={px} /></span>
       ))}
     </span>
   );

@@ -11,6 +11,7 @@ export default function AdminPanel({ open, messages = [], codes = [] }) {
   const [msg, setMsg] = useState(null);
   const [cg, setCg] = useState({ count: 1, amount: 100 });
   const [fresh, setFresh] = useState([]);
+  const [rp, setRp] = useState({ name: "", result: null });
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
 
   async function create(e) {
@@ -35,6 +36,13 @@ export default function AdminPanel({ open, messages = [], codes = [] }) {
     setFresh(r.data.codes);
     setMsg({ err: false, text: `${r.data.codes.length} code(s) created, ${r.data.amountCoins} pognons each.` });
     router.refresh();
+  }
+  async function resetPw(e) {
+    e.preventDefault();
+    setMsg(null);
+    const r = await post("/api/admin/reset-password", { username: rp.name });
+    if (!r.ok) return setMsg({ err: true, text: r.data.error || "Failed." });
+    setRp({ name: "", result: r.data });
   }
   async function settle(id, result) {
     if (!confirm(`Settle market #${id} with result ${result}? This pays out winners and cannot be undone.`)) return;
@@ -88,6 +96,14 @@ export default function AdminPanel({ open, messages = [], codes = [] }) {
           ))}
         </>
       )}
+      <form className="panel" onSubmit={resetPw}>
+        <h3>Reset a player's password</h3>
+        <p className="small muted mt">Gives a temporary password. Send it to the player, who can change it in Profile.</p>
+        <label>Player name or e-mail</label>
+        <input type="text" value={rp.name} onChange={(e) => setRp({ ...rp, name: e.target.value })} required />
+        <button className="btn block mt">Reset password</button>
+        {rp.result && <div className="notice" role="status">Temporary password for <b>{rp.result.username}</b>: <b style={{ fontFamily: "var(--px)", letterSpacing: ".06em" }}>{rp.result.tempPassword}</b></div>}
+      </form>
       <h2>Open markets</h2>
       {open.length === 0 && <p className="muted">No open markets.</p>}
       {open.map((m) => (
