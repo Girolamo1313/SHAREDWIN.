@@ -5,6 +5,9 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="foot-in">
         <div className="foot-links">
+          <Link href="/how-it-works">How it works</Link>
+          <Link href="/faq">FAQ</Link>
+          <Link href="/glossary">Glossary</Link>
           <Link href="/terms">Terms &amp; Conditions</Link>
           <Link href="/#contact">Contact us</Link>
         </div>

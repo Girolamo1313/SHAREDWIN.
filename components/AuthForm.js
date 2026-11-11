@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { post } from "@/lib/client";
 
 export default function AuthForm() {
@@ -45,6 +46,7 @@ export default function AuthForm() {
       )}
       <label htmlFor="password">Password</label>
       <input id="password" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} value={f.password} onChange={set("password")} required />
+      {mode === "login" && <p className="small mt"><Link href="/forgot-password">Forgot your password?</Link></p>}
       {err && <div className="notice err" role="alert">{err}</div>}
       <button className="btn pink block mt" disabled={busy}>{busy ? "..." : mode === "login" ? "Log in" : "Create account"}</button>
       {mode === "register" && <p className="small muted mt">Welcome bonus: 500 coins. Demo money only, no real payments.</p>}
