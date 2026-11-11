@@ -1,9 +1,7 @@
 import Link from "next/link";
-import Player from "@/components/Player";
-import Player9 from "@/components/Player9";
+import Duo from "@/components/Duo";
 import MatchCard from "@/components/MatchCard";
 import ContactForm from "@/components/ContactForm";
-import SideMenu from "@/components/SideMenu";
 import { getUser } from "@/lib/auth";
 import { listMatches } from "@/lib/queries";
 import { DEFAULT_COMMISSION_BPS, DEFAULT_MAX_PLAYERS } from "@/lib/rules";
@@ -19,14 +17,12 @@ export default async function Home() {
   const [user, matches] = await Promise.all([getUser(), listMatches({ status: "open" })]);
   return (
     <>
-      <SideMenu />
       <section className="panel hero">
         <div className="hero-in">
           <div className="hero-txt">
             <p className="eyebrow">The shared-pot prediction game</p>
             <div className="title-row">
               <h1>Shared<span>Win</span></h1>
-              <div className="art" aria-hidden="false"><Player9 fluid /><Player fluid /></div>
             </div>
             <p className="lead">Everybody puts coins in the pot. Pick <b>1</b>, <b>X</b> or <b>2</b>. The winners split it all.</p>
             <div className="row">
@@ -35,6 +31,7 @@ export default async function Home() {
             </div>
           </div>
         </div>
+        <div className="duo"><Duo /></div>
       </section>
 
       <h2>How it works</h2>
