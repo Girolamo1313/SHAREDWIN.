@@ -76,4 +76,4 @@ tests/          tests unitaires des règles
 ## Avant une vraie mise en production
 
 - Argent réel : licence de jeux/paris (en France, ANJ), KYC/AML, Stripe + webhooks, jeu responsable, vérification d'âge 18+.
-- Ajouter : limitation de débit (login, paris), vérification d'email, annulation de match avec remboursement, résultats automatiques via un flux de données sportives.
+- Ajouter : limitation de débit (login, paris), vérification d'email, annulation de match avec remboursement, résultats automatiques via un flux de données sportives. 
