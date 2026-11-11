@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { Trophy } from "@/components/Sprite";
-import Player from "@/components/Player";
+import Duo from "@/components/Duo";
 import MatchCard from "@/components/MatchCard";
 import ContactForm from "@/components/ContactForm";
 import { getUser } from "@/lib/auth";
@@ -22,15 +21,17 @@ export default async function Home() {
         <div className="hero-in">
           <div className="hero-txt">
             <p className="eyebrow">The shared-pot prediction game</p>
-            <h1>Shared<span>Win</span></h1>
+            <div className="title-row">
+              <h1>Shared<span>Win</span></h1>
+            </div>
             <p className="lead">Everybody puts coins in the pot. Pick <b>1</b>, <b>X</b> or <b>2</b>. The winners split it all.</p>
             <div className="row">
               <Link className="btn pink blink" href={user ? "/matches" : "/auth"}>{user ? "Press start" : "Insert coin"}</Link>
               <Link className="btn ghost" href="/matches">See matches</Link>
             </div>
           </div>
-          <div className="art"><div className="bob"><Trophy px={7} /></div><div className="field"><Player px={3} /></div></div>
         </div>
+        <div className="duo"><Duo /></div>
       </section>
 
       <h2>How it works</h2>

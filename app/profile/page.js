@@ -3,6 +3,7 @@ import LoginRequired from "@/components/LoginRequired";
 import LogoutButton from "@/components/LogoutButton";
 import Avatar from "@/components/Avatar";
 import AvatarEditor from "@/components/AvatarEditor";
+import ChangePasswordForm from "@/components/ChangePasswordForm";
 import { getUser } from "@/lib/auth";
 import { userStats } from "@/lib/queries";
 
@@ -26,6 +27,7 @@ export default async function Profile() {
         <div className="row"><Avatar avatar={user.avatar} size={72} /><div><h3 style={{ fontSize: 14 }}>{user.username}</h3><p className="muted" style={{ margin: "8px 0 0" }}>Player since {new Date(user.created_at).toLocaleDateString("en-GB")}</p></div></div>
       </section>
       <AvatarEditor initial={user.avatar} />
+      <ChangePasswordForm />
       <section className="panel">
         <h3>Badges</h3>
         <div className="chips mt">{badges.length ? badges.map((b) => <span key={b} className="tag">{b}</span>) : <span className="muted">Play to unlock badges.</span>}</div>
