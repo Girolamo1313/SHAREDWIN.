@@ -3,6 +3,7 @@ import Player from "@/components/Player";
 import Player9 from "@/components/Player9";
 import MatchCard from "@/components/MatchCard";
 import ContactForm from "@/components/ContactForm";
+import SideMenu from "@/components/SideMenu";
 import { getUser } from "@/lib/auth";
 import { listMatches } from "@/lib/queries";
 import { DEFAULT_COMMISSION_BPS, DEFAULT_MAX_PLAYERS } from "@/lib/rules";
@@ -18,6 +19,7 @@ export default async function Home() {
   const [user, matches] = await Promise.all([getUser(), listMatches({ status: "open" })]);
   return (
     <>
+      <SideMenu />
       <section className="panel hero">
         <div className="hero-in">
           <div className="hero-txt">
